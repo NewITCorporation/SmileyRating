@@ -14,10 +14,10 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
 import android.support.annotation.StringRes;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
@@ -74,7 +74,7 @@ public class SmileRating extends BaseRating {
     @Smiley
     private int mSelectedSmile = NONE;
     @Smiley
-    private int mPreviousSmile = -1;
+    private int mPreviousSmile = NONE;
     @Smiley
     private int mNearestSmile = NONE;
     @Smiley
@@ -93,6 +93,8 @@ public class SmileRating extends BaseRating {
     private float mPlaceHolderScale = 1f;
     private boolean mSmileyNotSelectedPreviously = true;
     private boolean mIndicator = false;
+
+    private int textSize;
 
     public SmileRating(Context context) {
         super(context);
@@ -242,7 +244,7 @@ public class SmileRating extends BaseRating {
         mCenterY = mHeight / 2f;
         mFaceCenter.y = mCenterY;
         divisions = (mHeight / 32f);
-        mTextPaint.setTextSize(mHeight / 4.5f);
+        mTextPaint.setTextSize(textSize == 0 ? mHeight / 3.0f : textSize);
         mSmileys = Smileys.newInstance(Math.round(mWidth), Math.round(mHeight));
         setMeasuredDimension(Math.round(mWidth), (int) Math.round(mHeight + (mHeight * 0.48)));
         createTouchPoints();
@@ -431,6 +433,11 @@ public class SmileRating extends BaseRating {
             typeface = Typeface.DEFAULT;
         }
         mTextPaint.setTypeface(typeface);
+    }
+
+    public void setTextSize(float textSizeDP) {
+        textSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textSizeDP, getResources().getDisplayMetrics());
+        mTextPaint.setTextSize(textSize);
     }
 
     public boolean isShowingLine() {

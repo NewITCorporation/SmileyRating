@@ -22,8 +22,10 @@ public class MainActivity extends AppCompatActivity implements SmileRating.OnSmi
         mSmileRating = (SmileRating) findViewById(R.id.ratingView);
         mSmileRating.setOnSmileySelectionListener(this);
         mSmileRating.setOnRatingSelectedListener(this);
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "MetalMacabre.ttf");
-        mSmileRating.setTypeface(typeface);
+       //Typeface typeface = Typeface.createFromAsset(getAssets(), "MetalMacabre.ttf");
+        //mSmileRating.setTypeface(typeface);
+        mSmileRating.setTextSize(25);
+        mSmileRating.setSelectedSmile(BaseRating.NONE);
     }
 
     @Override
